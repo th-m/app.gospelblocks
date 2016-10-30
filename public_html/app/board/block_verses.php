@@ -1,7 +1,8 @@
 <?php
   include("../../includes/api_functions.php");
 
-  $verses = gb_userBlockVerses($_POST['user_id'],$_POST['board_id'],$_POST['block_id']);
+  // $verses = gb_userBlockVerses($_POST['user_id'],$_POST['board_id'],$_POST['block_id']);
+  $verses = gb_userBlockVerses($_POST['user_id'],$_POST['block_id']);
 
   foreach ($verses['block_verses'] as $verse) {
     $scripture=$verse['verse_scripture'];

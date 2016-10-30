@@ -41,7 +41,9 @@ $json_reponse = [
   "response" => "success",
   'alert' => 'Congratulations. You created a Block',
   'modal' => 'close',
-  'load' => 'boards_dsh'
+  'load' => 'boards_dsh',
+  'refresh_dash' => "refresh",
+  'user' => $user_id,
 ];
 
 echo json_encode($json_reponse);

@@ -90,10 +90,21 @@ Function gbCall($gbRoute) {
 		return $response;
 	}
 
-	// Bit Info
-	Function gb_userBlockVerses($user,$board_id,$block_id) {
+	// Get Block as Board Info
+	Function gb_userBlockBlocks($user,$block_id) {
 		// Make the Call
-		$response = gbCall("/users/$user/board/$board_id/block/$block_id");
+		$response = gbCall("/users/$user/block/board/$block_id");
+
+		// Return Response
+		return $response;
+	}
+
+	// Bit Info
+		// Function gb_userBlockVerses($user,$board_id,$block_id)
+	Function gb_userBlockVerses($user,$block_id) {
+		// Make the Call
+		// $response = gbCall("/users/$user/board/$board_id/block/$block_id");
+		$response = gbCall("/users/$user/block/$block_id/verses");
 
 		// Return Response
 		return $response;

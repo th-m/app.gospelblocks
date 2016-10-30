@@ -3,6 +3,7 @@
   //$volumes = gb_vols();
   // $books = gb_books();
   // print_r ($volumes);
+    // print_r ($_SESSION);
 ?>
 <div id="app_top_menu" class=""></div>
 <div id="app_body" class="">
@@ -40,7 +41,7 @@
             <div class="form-group">
               <textarea rows="4" cols="50" placeholder="Description" name='description' class="form-control" pattern=".{0}|.{20,}" required></textarea>
             </div><br/>
-            <div type="submit" id="build_board" type="submit" class="btn btn-warning fire_form"  onclick="fire_form()">Create Board</div>
+            <div type="submit" id="build_board" type="submit" class="btn btn-warning fire_form">Create Board</div>
           </form>
         </div>
       </div>

@@ -2,9 +2,10 @@
   include("../../includes/api_functions.php");
   $users_boards = gb_usersBoards($_POST['user_id']);
   $user_id = $_POST['user_id'];
+  // print_r ($_SESSION);
 
-  echo $user_id;
-  echo 'test';
+  // echo $user_id;
+  // echo 'test';
   // print_r ($users_boards);
   foreach ($users_boards['users_boards'] as $k => $v) {
     $title = $v['board_info']['title'];

@@ -2,21 +2,14 @@ $(function(){
   console.log('Welcome to Gospel Blocks');
 });
 $('.fire_form').on('click',function(event){
-// $('.fire_form').click(function(event){
-// function fire_form(event){
     event.preventDefault();
     $form = event.target.id
-    console.log($form);
-    // switch($form) { //Switch case for value of action
-    //   case "sign_up": test_function(); break;
-    // }
+    // console.log($form);
     var $inputs = $('#'+$form+'_form :input');
-
     var values = {};
     $inputs.each(function() {
         values[this.name] = $(this).val();
     });
-
     var checkboxes = [];
     var checks = $('#'+$form+'_form input:checkbox:checked').map(function () {
       checkboxes.push($(this).attr('value'));
@@ -34,7 +27,7 @@ $('.fire_form').on('click',function(event){
       }).done(function(data) {
         // Get the JSON response.
         var json = $.parseJSON(data);
-
+        console.log(json);
         if(json.response == "success"){
           if(json.modal == "close"){
               $('#'+$form+'_modal').modal('toggle');
@@ -45,6 +38,16 @@ $('.fire_form').on('click',function(event){
           if(json.load != ""){
               $('#'+json.load).load('app/'+json.load+'.php').hide().fadeIn('slow');
           }//console.log(json.alert);
+          if(json.refresh_dash != null){
+            $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": json.user}).hide().fadeIn('slow');
+          }
+          if(json.refresh_list != null){
+            if(json.refresh_list == "block_id"){
+              $('#app_body').load('app/board/board.php', {"user_id": json.user, "block_id": json.refresh_id}).hide().fadeIn('slow');
+            }else{
+              $('#app_body').load('app/board/board.php', {"user_id": json.user, "board_id": json.refresh_id}).hide().fadeIn('slow');
+            }
+          }
           if(json.redirect != null){
             window.location.replace(json.redirect);
           }
@@ -52,53 +55,80 @@ $('.fire_form').on('click',function(event){
       });
 // }
 });
- function fire_form(event){
- }
-function myfunction(){
-  console.log('hello');
-}
 
-$(".note_edit").dblclick(function(event) {
+// var touchtime = 0;
+// $('.dig').on('click', function() {
+//     if(touchtime == 0) {
+//         //set first click
+//         touchtime = new Date().getTime();
+//     } else {
+//         //compare first click to this click and see if they occurred within double click threshold
+//         if(((new Date().getTime())-touchtime) < 800) {
+//             //double click occurred
+//             alert("double clicked");
+//             touchtime = 0;
+//         } else {
+//             //not a double click so set as a new first click
+//             touchtime = new Date().getTime();
+//         }
+//     }
+// });
+$(".dig").dblclick(function(event) {
   event.preventDefault();
   // event.preventDefault();
   console.log("clicked");
+  // $permission = $(this).attr("data-perm");
+  $block = $(this).attr("data-block");
+  $user = $(this).attr("data-user");
+  $('#app_body').load('app/board/board.php', {"user_id": $user, "block_id": $block}).hide().fadeIn('slow');
+});
+
+// $(".dig").dblclick(function(event) {
+//   event.preventDefault();
+//   // event.preventDefault();
+//   console.log("clicked");
+//
+//   // $permission = $(this).attr("data-perm");
+//   $block = $(this).attr("data-block");
+//   $user = $(this).attr("data-user");
+//   $('#app_body').load('app/board/board.php', {"user_id": $user, "block_id": $block}).hide().fadeIn('slow');
 
   // Get the params.
   // console.log("clicked")
-  var note_id = $(this).attr("note_id");
-    console.log(note_id);
-  // var message_id = $(this).attr("message_id");
-  var original_message = $("#note_id_"+note_id).text();
-  console.log(original_message);
+  // var note_id = $(this).attr("note_id");
+  //   console.log(note_id);
+  // // var message_id = $(this).attr("message_id");
+  // var original_message = $("#note_id_"+note_id).text();
+  // console.log(original_message);
 
   // Message to editable
-  $("#note_id_"+note_id).html("<textarea class=\'textarea\' input_note_id=\'+note_id+\'>" + original_message + "</textarea>");
-  $("#note_id_"+note_id).children().first().focus();
+  // $("#note_id_"+note_id).html("<textarea class=\'textarea\' input_note_id=\'+note_id+\'>" + original_message + "</textarea>");
+  // $("#note_id_"+note_id).children().first().focus();
 
-  $("textarea[input_note_id=\'+note_id+\']").blur(function() {
-    // Get the new message
-    var new_note = $("textarea[input_note_id=\'+note_id+\']").val();
-
-    // POST to update the message.
-    $.ajax({
-      type: "POST",
-      url: "router/scripts/notes_update.php",
-      data: JSON.stringify({note_id: note_id, new_note: new_note}),
-      dataType: "html"
-    }).done(function(data) {
-      console.log(data);
-      // Get the JSON response.
-      var json = $.parseJSON(data);
-
-      if(json.response == "updated"){
-        // Display the new message;
-        $("#note_id_"+note_id).text(json.new_note);
-        // $('#note_id_'+note_id).html("<textarea class='textarea' input_note_id='"+note_id+"'>" + original_message + "</textarea>");
-
-      }
-    });
-  });
-});
+  // $("textarea[input_note_id=\'+note_id+\']").blur(function() {
+  //   // Get the new message
+  //   var new_note = $("textarea[input_note_id=\'+note_id+\']").val();
+  //
+  //   // POST to update the message.
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "router/scripts/notes_update.php",
+  //     data: JSON.stringify({note_id: note_id, new_note: new_note}),
+  //     dataType: "html"
+  //   }).done(function(data) {
+  //     console.log(data);
+  //     // Get the JSON response.
+  //     var json = $.parseJSON(data);
+  //
+  //     if(json.response == "updated"){
+  //       // Display the new message;
+  //       $("#note_id_"+note_id).text(json.new_note);
+  //       // $('#note_id_'+note_id).html("<textarea class='textarea' input_note_id='"+note_id+"'>" + original_message + "</textarea>");
+  //
+  //     }
+  //   });
+  // });
+// });
 // $('.add_to_block').click(function(){
 //      $verse_id = $(this).attr("data-verse_id");
 //
