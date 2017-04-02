@@ -1,9 +1,9 @@
 $(function(){
   console.log('Welcome to Gospel Blocks');
 });
-$('.fire_form').on('click',function(event){
-    event.preventDefault();
-    $form = event.target.id
+$('.fire_form').on('click',function(e){
+    e.preventDefault();
+    $form = e.target.id
     // console.log($form);
     var $inputs = $('#'+$form+'_form :input');
     var values = {};
@@ -17,8 +17,24 @@ $('.fire_form').on('click',function(event){
     values['checkboxes']=checkboxes;
     $clean_form = $form.replace(/\d+/g, '');
     //  console.log($clean_form);
-     console.log(values);
+    //  console.log(values);
     //  console.log(checkboxes);
+    var url = 'php_scripts/'+$clean_form+'.php';
+    // console.log(url);
+    // $.ajax({
+    //     url: 'php_scripts/'+$clean_form+'.php',
+    //     type:'POST',
+    //     data:JSON.stringify({values}),
+    //     dataType: "json"
+    //   }).done(function(data){
+    //     var json = $.parseJSON(data);
+    //     // if(json.redirect != null){
+    //     //     window.location.replace(json.redirect);
+    //     // }
+    //     // var json = JSON.stringify(eval("(" + data + ")"));
+    //     console.log(typeof(json));
+    //     console.log('hello');
+    //   });
     $.ajax({
         url: 'php_scripts/'+$clean_form+'.php',
         type:'POST',
@@ -74,8 +90,8 @@ $('.fire_form').on('click',function(event){
 //     }
 // });
 $(".dig").dblclick(function(event) {
-  event.preventDefault();
-  // event.preventDefault();
+  e.preventDefault();
+  // e.preventDefault();
   console.log("clicked");
   // $permission = $(this).attr("data-perm");
   $block = $(this).attr("data-block");
@@ -84,8 +100,8 @@ $(".dig").dblclick(function(event) {
 });
 
 // $(".dig").dblclick(function(event) {
-//   event.preventDefault();
-//   // event.preventDefault();
+//   e.preventDefault();
+//   // e.preventDefault();
 //   console.log("clicked");
 //
 //   // $permission = $(this).attr("data-perm");
