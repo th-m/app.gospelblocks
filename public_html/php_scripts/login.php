@@ -1,7 +1,7 @@
 <?php
 
 	include("../includes/include.php");
-
+	// $redirect = "http://gospelblocks.local/"
 	$json = file_get_contents('php://input');
 	$json = json_decode($json, true);
 	// print_r($json);
@@ -15,8 +15,8 @@
 
 	// $password_new = password_hash($password, PASSWORD_DEFAULT);
 	$users = mysqli_fetch_assoc(mysqli_query($link, "SELECT id, password FROM users WHERE email = '$email';"));
-
 	if(password_verify($password, $users['password'])) {
+		// print_r($users);
 		// Create the a 'remember me' token
 	  $rem = generateRandomToken();
 	  $cookie_expire = time()+86400*240; // expires 30 days
@@ -28,7 +28,7 @@
 								VALUES
 								(null,$user_id,'$rem','$sql_date')";
 		mysqli_query($link,$remember_me_sql);
-	  setcookie('token', $rem, $cookie_expire, '/', 'gospelblocks.com');
+	  setcookie('token', $rem, $cookie_expire, '/', $_SERVER[HTTP_HOST]);
 		$email = 'hit the right area';
 		session_start();
 		$_SESSION['uid'] = $user_id;
@@ -36,7 +36,7 @@
 
 	$json_reponse = [
 		"response" => "success",
-		"redirect" => "http://www.gospelblocks.com/",
+		"redirect" => "http://$_SERVER[HTTP_HOST]",
 		'email' => $email
 	];
 	 echo json_encode($json_reponse);
