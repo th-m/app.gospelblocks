@@ -100,11 +100,11 @@ Function gbCall($gbRoute) {
 	}
 
 	// Bit Info
-		// Function gb_userBlockVerses($user,$board_id,$block_id)
+		// Function gb_userBlockVerses($user,$board_id,$block_id){
 	Function gb_userBlockVerses($user,$block_id) {
 		// Make the Call
 		// $response = gbCall("/users/$user/board/$board_id/block/$block_id");
-		$response = gbCall("/users/$user/block/$block_id/verses");
+		$response = gbCall("/users/$user/block/$block_id");
 
 		// Return Response
 		return $response;

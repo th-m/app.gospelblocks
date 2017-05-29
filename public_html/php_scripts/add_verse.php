@@ -3,7 +3,6 @@ require("../includes/include.php");
 
 $json = file_get_contents('php://input');
 $json = json_decode($json, true);
-
 $verse_id = $json['values']['verse_id'];
 
 foreach ($json['values']['checkboxes'] as $block_id) {
