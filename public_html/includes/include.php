@@ -1,6 +1,6 @@
 <?php
-  // include ('../../cons.php');
   include ('cons.php');
   include ('api_functions.php');
   include ('functions.php');
+  // include ('../../cons.php');
 ?>
