@@ -38,75 +38,74 @@ Function gbCall($gbRoute) {
 
 	// All Volumes
 	Function gb_volumes() {
-		// Make the Call
 		$response = gbCall("/volumes");
-
-		// Return Response
 		return $response;
 	}
 
 	// Volumes Books
   Function gb_books($vol) {
-    // Make the Call
     $response = gbCall("/volume/$vol");
-
-    // Return Response
     return $response;
   }
 
-	 // Books Chapters
-	  Function gb_chapters($vol,$book) {
-	    // Make the Call
-	    $response = gbCall("/volume/$vol/book/$book");
-
-	    // Return Response
-	    return $response;
-	  }
+ 	// Books Chapters
+  Function gb_chapters($vol,$book) {
+    $response = gbCall("/volume/$vol/book/$book");
+    return $response;
+  }
 
   // Chapters Verses
   Function gb_verses($vol,$book,$chap) {
-    // Make the Call
     $response = gbCall("/volume/$vol/book/$book/chapter/$chap");
-
-    // Return Response
     return $response;
   }
 
-	// Users Boards
-	Function gb_usersBoards($user) {
-		// Make the Call
-		$response = gbCall("/users/$user/boards");
-
-		// Return Response
-		return $response;
-	}
-
-	// Board Info/ Blocks
-	Function gb_userBoardBlocks($user,$board_id) {
-		// Make the Call
-		$response = gbCall("/users/$user/board/$board_id");
-
-		// Return Response
+	// CALLS SPECIFIC TO THE BLOCKS PANEL IN APP
+	// Get Blocks Pinnd To Dashboard
+	Function gb_usersPinnedBlocks($user) {
+		$response = gbCall("/users/$user/pinned");
 		return $response;
 	}
 
 	// Get Block as Board Info
-	Function gb_userBlockBlocks($user,$block_id) {
-		// Make the Call
-		$response = gbCall("/users/$user/block/board/$block_id");
-
-		// Return Response
-		return $response;
-	}
-
-	// Bit Info
-		// Function gb_userBlockVerses($user,$board_id,$block_id){
-	Function gb_userBlockVerses($user,$block_id) {
-		// Make the Call
-		// $response = gbCall("/users/$user/board/$board_id/block/$block_id");
+	Function gb_userBlocks($user,$block_id) {
 		$response = gbCall("/users/$user/block/$block_id");
-
-		// Return Response
 		return $response;
 	}
+
+	// Get Verses associated with Block
+	Function gb_userBlockVerses($user,$block_id) {
+		$response = gbCall("/users/$user/block/$block_id/verses");
+		return $response;
+	}
+	// // Users Boards
+	// Function gb_usersBoards($user) {
+	// // 	$response = gbCall("/users/$user/boards");
+	//
+	// 	return $response;
+	// }
+
+
+	// Board Info/ Blocks
+	// Function gb_userBoardBlocks($user,$board_id) {
+	// // 	$response = gbCall("/users/$user/board/$board_id");
+	//
+	// 	return $response;
+	// }
+
+	// // Get Block as Board Info
+	// Function gb_userBlocks($user,$block_id) {
+	// // 	$response = gbCall("/users/$user/block/$block_id");
+	//
+	// 	return $response;
+	// }
+	// Users Boards
+
+	// // Get Block as Board Info
+	// Function gb_userBlockBlocks($user,$block_id) {
+	// // 	$response = gbCall("/users/$user/block/$block_id");
+	//
+	// 	return $response;
+	// }
+
 ?>
