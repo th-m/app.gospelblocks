@@ -30,7 +30,7 @@
         var string = '<div id="add_verse_'+$verse_id+'" class="modal fade" role="dialog">  <div class="modal-dialog"><div class="modal-content">  <div class="modal-body"><p>Some text in the modal.</p><form id="add_verse'+$verse_id+'_form" action="build_block.php" method="post">  <input type="hidden" name="verse_id" value="'+$verse_id+'">'+$new_str+'  <div type="submit" id="add_verse'+$verse_id+'" type="submit" class="btn btn-warning fire_form">Add Verse</div></form></div></div>  </div> </div>';
         $('body').append(string);
         $('#add_verse_'+$verse_id).modal('toggle');
-       $(":checkbox").labelauty();
+        $(":checkbox").labelauty();
         $.getScript( "js/functions.js" )
 
       }

@@ -1,14 +1,16 @@
 <?php
-  //  print_r($_POST);
+   print_r($_POST);
   //  print_r($_SESSION);
 
    include("../../includes/api_functions.php");
-   if (!empty($_POST['block_id'])){
-     $user_board = gb_userBlockBlocks($_POST['user_id'],$_POST['block_id']);
-   }else{
-     $user_board = gb_userBoardBlocks($_POST['user_id'],$_POST['board_id']);
-   }
-   $title = $user_board['board_info']['title'];
+  $payload = gb_userBlocks($_POST['user_id'],$_POST['block_id']);
+  //  if (!empty($_POST['block_id'])){
+  //    $payload = gb_userBlockBlocks($_POST['user_id'],$_POST['block_id']);
+  //  }else{
+  //    $payload = gb_userBoardBlocks($_POST['user_id'],$_POST['board_id']);
+  //  }
+  //  $title = $payload['board_info']['title'];
+   $title = $payload['info']['title'];
    $user_id = $_POST['user_id'];
    $board_id = $_POST['board_id'];
  ?>
@@ -24,7 +26,8 @@
       <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">
           <div id="line" class="list-group list-group-horizontal">
             <?php
-              foreach ($user_board['users_blocks'] as $block) {
+              // foreach ($payload['users_blocks'] as $block) {
+              foreach ($payload['blocks'] as $block) {
                 $title = $block['title'];
                 $block_id = $block['id'];
                 echo "<a href='#' data-user='$user_id' data-block='$block_id' class='list-group-item block dig'>$title</a>";
@@ -71,15 +74,15 @@
         <h4 class="modal-title">Create Bit</h4>
       </div>
       <div class="modal-body">
-        <form id="build_block_form" action="build_block.php" method="post">
+        <form id="build_block" class="form_submit">
+          <input type="hidden" name="function" value="build_block">
           <input type="hidden" name="permission" value="<?=$_POST['permission']?>">
           <input type="hidden" name="block_id" value="<?=$_POST['block_id']?>">
-          <input type="hidden" name="board_id" value="<?=$_POST['board_id']?>">
           <input type="hidden" name="user_id" value="<?=$_POST['user_id']?>">
           <div class="form-group">
             <input type="text" placeholder="Title" name='title' class="form-control">
           </div><br/>
-          <div type="submit" id="build_block" type="submit" class="btn btn-warning fire_form" onclick="fire_form()" >Create block</div>
+          <button type="submit" type="submit" class="btn btn-warning">Create block</button>
         </form>
       </div>
     </div>
