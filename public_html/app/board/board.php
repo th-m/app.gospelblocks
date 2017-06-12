@@ -1,5 +1,5 @@
 <?php
-   print_r($_POST);
+  //  print_r($_POST);
   //  print_r($_SESSION);
 
    include("../../includes/api_functions.php");
@@ -74,7 +74,7 @@
         <h4 class="modal-title">Create Bit</h4>
       </div>
       <div class="modal-body">
-        <form id="build_block" class="form_submit">
+        <form id="build_block" class="form_submit" data-user="<?=$_POST['user_id']?>">
           <input type="hidden" name="function" value="build_block">
           <input type="hidden" name="permission" value="<?=$_POST['permission']?>">
           <input type="hidden" name="block_id" value="<?=$_POST['block_id']?>">
@@ -89,30 +89,7 @@
   </div>
 </div>
 
-<div id="app_footer" class="">
-  <script src="js/functions.js"></script>
 
   <script>
-  $("#library_search").load("app/board/library_select.php");
-
-    $('.block').click(function(){
-      $('#block_controller').removeClass('hidden-xs');
-      $('#book_controller').addClass('hidden-xs');
-      $block_id = $(this).attr("data-block");
-      // $('#block_verses').load('app/board/block_verses.php', {"user_id": <?php echo $user_id;?>, "board_id": <?php echo $board_id;?>, "block_id": $block_id}).hide().fadeIn('slow');
-      $('#block_verses').load('app/board/block_verses.php', {"user_id": <?php echo $user_id;?>, "block_id": $block_id}).hide().fadeIn('slow');
-    });
-    $('.see_book_controller').click(function(){
-      $('#book_controller').removeClass('hidden-xs');
-      $('#block_controller').addClass('hidden-xs');
-    });
-    $('.see_block_controller').click(function(){
-      $('#block_controller').removeClass('hidden-xs');
-      $('#book_controller').addClass('hidden-xs');
-    });
-    $('#dash_btn').click(function(){
-       window.location.href = "https://gospelblocks.com/";
-    });
-
+    $("#library_search").load("app/board/library_select.php");
   </script>
-</div>

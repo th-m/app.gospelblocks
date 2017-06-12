@@ -54,5 +54,10 @@
 </div>
 
 <script>
-  $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": <?=$_SESSION['uid']?>}).hide().fadeIn('slow');
+  appGlob = {
+    'userId' : "<?=$_SESSION['uid']?>",
+    'history' : [],
+    'currentBlock' : "",
+  }
+  $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": appGlob.userId}).hide().fadeIn('slow');
 </script>
