@@ -1,20 +1,7 @@
-<?php
-
-  //$volumes = gb_vols();
-  // $books = gb_books();
-  // print_r ($volumes);
-    // print_r ($_SESSION);
-?>
 <div id="app_top_menu" class=""></div>
-<!-- <div id="app_body" class="container"> -->
 <div id="app_body" class="">
   <h1 class="text-center">Welcome to Gospel Blocks App</h1>
-  <!-- <div class="panel panel-default">
-    <div class="panel-heading">Panel Heading</div>
-    <div class="panel-body">Panel Content</div>
-  </div> -->
   <div id="dashboard" class="">
-
   </div>
   <div class="row">
       <div class="col-md-10 col-md-offset-1 col-sm-12">
@@ -52,17 +39,30 @@
   </div>
 
 </div>
-
+<footer>
+  <div class="col-xs-12">
+    <form>
+      <input type="hidden" name="function" value="feedback">
+      <div class="form-group">
+        <textarea name="comments" class="form-control" rows="3" cols="80" placeholder="Leave a comment here, and help improve the app."></textarea>
+      </div>
+      <button type="submit" name="button" class="btn btn-success">Send Feedback</button>
+    </form>
+  </div>
+</footer>
 <script>
+  // Global object. Holds controlling data for php scripts and frontend manipulation.
   appGlob = {
     'userId' : "<?=$_SESSION['uid']?>",
+    'usersFriends' : [],
     'history' : [],
     'currBlock' : "",
     'viewBlock' : "",
+    'blockTitle' : "",
+    'blockDesc' : "",
     'loadBlockVerses' :  function(){
                           $('#block_verses').load('app/board/block_verses.php', {"user_id": this.userId, "block_id": this.viewBlock}).hide().fadeIn('slow');
                         },
-
     'loadBoard' : function (){
                     $('#app_body').load('app/board/board.php', {"user_id": this.userId, "block_id": this.currBlock}, function(){
                       appGlob.loadNav();
@@ -73,9 +73,19 @@
                 },
     'editBlockInfo' : function(){
                   swal({
-                        title:`<br/><textarea id="update_block_title" style="font-size:30px; width:100%; height:35px; float:left;">`+appGlob.blockTitle+`</textarea><br/>`,
+                        title:`<i class="fa fa-thumb-tack pin_block" aria-hidden="true"></i> <span style="display:inline-block; width:60px;">&nbsp;</span><i class="fa fa-users share_block" aria-hidden="true"></i>
+                              <br/>`,
                         // type: 'info',
-                        html: `<textarea id="update_block_description" style="float:left; height:100px; width:100%;">`+appGlob.blockDesc+`</textarea>`,
+                        html: `
+                        <div class="form-group">
+                          <label class="pull-left" for="update_block_title">Title:</label>
+                          <input id="update_block_title" class=" form-control"  style="font-size:30px; width:100%; height:35px; float:left;" value ="`+appGlob.blockTitle+`"><br/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                          <label class="pull-left" for="update_block_description">Description:</label>
+                          <textarea id="update_block_description" class="form-control"  row="5" style="height:100px; width:100%;">`+appGlob.blockDesc+`</textarea>
+                        </div>`,
                         showCloseButton: true,
                         showCancelButton: true,
                         confirmButtonText:
@@ -115,6 +125,88 @@
                       )
                     }
                   });
+    },
+    'shareBlock' : function(){
+      $.ajax({
+          url: 'php_scripts/get_users.php',
+          type:'POST',
+          data:JSON.stringify({appGlob}),
+          dataType: "html"
+        }).done(function(data) {
+          var json = $.parseJSON(data);
+          if(json.response == "success"){
+            let userOptions = "";
+            let users = $.parseJSON(json.allUser);
+            users.forEach(function(user){
+              userOptions += `<option value='`+user.id +`' data-subtext="`+user.email+`">`+ user.display_name +`</option>`;
+            });
+            swal({
+              title: '<h2>Select your buds!</h2>',
+              html: `<div class="row">
+                      <div class="col-xs-12">
+                        <select id="user_select" class="selectpicker " multiple="multiple" data-live-search="true">`
+                          +userOptions+
+                        `</select>
+                      </div>
+                    </div>`,
+              onOpen: function() {
+                    $('#user_select').selectpicker('refresh');
+                  },
+              showCloseButton: true,
+              showCancelButton: true,
+              confirmButtonText:
+                '<i class="fa fa-thumbs-up"></i> Share!',
+              cancelButtonText:
+                '<i class="fa fa-thumbs-down"></i> Don\'t share? :/'
+            }).then(function () {
+              appGlob.usersFriends = $('#user_select').val();
+              console.log(appGlob);
+              $.ajax({
+                  url: 'php_scripts/share_block.php',
+                  type:'POST',
+                  data:JSON.stringify({appGlob}),
+                  dataType: "html"
+                }).done(function(data) {
+                  var json = $.parseJSON(data);
+                  console.log(json);
+                  if(json.response == "success"){
+                    swal(
+                      'Wahoo!',
+                      'Your shared a block.',
+                      'success'
+                    )
+                  }
+                });
+            }, function (dismiss) {
+              if (dismiss === 'cancel') {  // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
+                swal(
+                  'Didn\'t Share',
+                  'You can always share later. If you want.',
+                  'Success'
+                )
+              }
+            });
+            // .catch(swal.noop)  use this to dismiss promisses in swal.
+          }
+        });
+    },
+    'pinBlock': function(){
+      $.ajax({
+          url: 'php_scripts/pin_block.php',
+          type:'POST',
+          data:JSON.stringify({appGlob}),
+          dataType: "html"
+        }).done(function(data) {
+          var json = $.parseJSON(data);
+          console.log(json);
+          if(json.response == "success"){
+            swal(
+              'Pinned!',
+              'Now your block is viewable on the dashboard :)',
+              'success'
+            )
+          }
+        });
     }
   }
   $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": appGlob.userId}).hide().fadeIn('slow');

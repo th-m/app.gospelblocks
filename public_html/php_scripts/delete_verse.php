@@ -11,8 +11,6 @@ $alert = 'Wow, You just organized a block of verses';
 
 $json_reponse = [
   "response" => "success",
-  'user' => $json['values']['userId'],
-  'block' => $json['values']['currentBlock'],
   'refresh_verses' => "yes",
 ];
 

@@ -1,24 +1,26 @@
-/*Inline Block Top Nav Styling*/
-/*
-.no_pad{padding: 0 !important;margin: 0 !important;}
-.container{margin: 0;}
-@media (max-width: 797px) {
-    .container {
-        margin: 0;
-        width:100%;
-        padding-left: 0px;
-        padding-right: 0px;
-    }
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px;
+    /* bottom = footer height */
+    padding: 25px;
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
 }
 
-@media (min-width: 992px){
-  .container {
-      margin: 0;
-      width:100%;
-      padding-left: 0px;
-      padding-right: 0px;
-  }
-}*/
+footer form button {
+  position: relative;
+  float:right;
+  bottom:35px;
+}
 .list-group-horizontal .list-group-item {
     display: inline;
 

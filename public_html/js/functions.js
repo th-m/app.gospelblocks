@@ -63,8 +63,8 @@ function frontEndAction(json){
 }
 
 $('#app_body').on('click' ,'.user_board' ,function(){
-  $permission = $(this).data("perm");
-  appGlob.currBlock = $(this).data("block");
+  $permission = $(this).parent().data("perm");
+  appGlob.currBlock = $(this).parent().data("block");
   appGlob.history.push(appGlob.currBlock);
   appGlob.loadBoard();
 });
@@ -165,6 +165,7 @@ $('#app_body').on('click', '.delete_verse' ,function(){
 var sw = 'false';
 $('#app_body').on('mousedown', '.block' ,function(){
     appGlob.viewBlock = $(this).data('block');
+    appGlob.currBlock = $(this).data('block');
     appGlob.blockTitle = $(this).text();
     appGlob.blockDesc = $(this).data('description')
     clearTimeout(this.downTimer);
@@ -192,9 +193,10 @@ $('#app_body').on('touchstart','.block', function(){
     blockTimer = setTimeout(blockLongTouch, touchduration);
     appGlob.blockTitle = $(this).text();
     appGlob.blockDesc = $(this).data('description')
-    $(this).addClass('select');
     appGlob.currBlock = $(this).data('block');
+    appGlob.viewBlock = $(this).data('block');
 });
+
 $('#app_body').on('touchend','.block', function(){
   if (blockTimer){
   }
@@ -205,6 +207,19 @@ function blockLongTouch() {
   appGlob.editBlockInfo();
 };
 
+$('body').on('click', '.pin_block' ,function(e){
+    appGlob.pinBlock();
+});
+$('body').on('click', '.share_block' ,function(e){
+    appGlob.shareBlock();
+});
+
+$('#dashboard').on('click','.share_block', function(){
+  appGlob.currBlock = $(this).parent().parent().data("block");
+});
+
+// TODO: IMPLEMENT CONTROLS ON PERMISSIONS
+// TODO: create feedback button at bottom.
 // TODO: Look at tooltip plugins.
 // TODO: Look at firebase.
 // TODO: Look at react.
