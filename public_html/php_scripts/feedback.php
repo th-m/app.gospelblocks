@@ -5,7 +5,7 @@
 	// Get JSON Call
 	$json = file_get_contents('php://input');
 	$json = json_decode($json, true);
-
+  $message = $json['feedback'];
   function slack_message($message, $channel, $username, $emoji) {
   	// Build Message.
   	$data = "payload=" . json_encode(array(
@@ -24,7 +24,6 @@
   	curl_close($ch);
   }
 
-  $slack_message = "*User:* $user_email \n joined your mailing list";
-  slack_message($slack_message, "#new-users", "Welcome Email Sent", ":speech_balloon:");
+  slack_message($message, "#gospel_blocks_ideas", "Someone Said Something", ":speech_balloon:");
 
 ?>
