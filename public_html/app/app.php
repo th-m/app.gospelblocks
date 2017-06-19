@@ -6,8 +6,8 @@
     // print_r ($_SESSION);
 ?>
 <div id="app_top_menu" class=""></div>
+<!-- <div id="app_body" class="container"> -->
 <div id="app_body" class="">
-
   <h1 class="text-center">Welcome to Gospel Blocks App</h1>
   <!-- <div class="panel panel-default">
     <div class="panel-heading">Panel Heading</div>
@@ -44,7 +44,7 @@
             <div class="form-group">
               <textarea rows="4" cols="50" placeholder="Description" name='description' class="form-control" pattern=".{0}|.{20,}" required></textarea>
             </div><br/>
-            <button type="submit" type="submit" class="btn btn-warning">Create block</button>
+            <button type="submit" class="btn btn-warning">Create block</button>
           </form>
         </div>
       </div>
@@ -57,7 +57,20 @@
   appGlob = {
     'userId' : "<?=$_SESSION['uid']?>",
     'history' : [],
-    'currentBlock' : "",
+    'currBlock' : "",
+    'viewBlock' : "",
+    'loadBlockVerses' :  function(){
+                          $('#block_verses').load('app/board/block_verses.php', {"user_id": this.userId, "block_id": this.viewBlock}).hide().fadeIn('slow');
+                        },
+
+    'loadBoard' : function (){
+                    $('#app_body').load('app/board/board.php', {"user_id": this.userId, "block_id": this.currBlock}, function(){
+                      appGlob.loadNav();
+                    });
+                  },
+    'loadNav' : function (){
+                  $('#line').load('app/board/nav.php ', {'user_id':this.userId, 'block_id': this.currBlock});
+                }
   }
   $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": appGlob.userId}).hide().fadeIn('slow');
 </script>

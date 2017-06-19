@@ -49,7 +49,8 @@
           <h4 class="modal-title">Sign Up</h4>
         </div>
         <div class="modal-body">
-          <form id="sign_up_form" action="sign_up.php" method="post">
+          <form id="sign_up_form" class="form_submit" method="post">
+              <input type="hidden" name="function" value="sign_up">
             <div class="form-group">
               <input type="text" placeholder="User Name" name='display_name' class="form-control">
             </div><br/>
@@ -62,7 +63,7 @@
             <div class="form-group">
               <input type="password" placeholder="Confirm Password" name="password_chk" class="form-control">
             </div><br/>
-            <div id="sign_up" type="submit" class="btn btn-warning fire_form">Sign Up</div>
+            <button type="submit" type="submit" class="btn btn-warning">Sign Up</button>
           </form>
         </div>
       </div>
@@ -79,14 +80,15 @@
           <h4 class="modal-title">Sign Up</h4>
         </div>
         <div class="modal-body">
-          <form id="login_form"  action="login.php" method="post">
+          <form id="login_form"  class="form_submit">
+            <input type="hidden" name="function" value="login">
             <div class="form-group">
               <input type="text" placeholder="Email" name='email' class="form-control">
             </div>
             <div class="form-group">
               <input type="password" placeholder="Password" name="password" class="form-control">
             </div>
-            <div  id="login" type="submit" class="btn btn-success fire_form">Sign in</div>
+            <button type="submit" class="btn btn-success">Sign in</button>
           </form>
         </div>
       </div>

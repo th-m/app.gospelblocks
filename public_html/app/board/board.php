@@ -1,15 +1,7 @@
 <?php
-  //  print_r($_POST);
-  //  print_r($_SESSION);
 
-   include("../../includes/api_functions.php");
+  include("../../includes/api_functions.php");
   $payload = gb_userBlocks($_POST['user_id'],$_POST['block_id']);
-  //  if (!empty($_POST['block_id'])){
-  //    $payload = gb_userBlockBlocks($_POST['user_id'],$_POST['block_id']);
-  //  }else{
-  //    $payload = gb_userBoardBlocks($_POST['user_id'],$_POST['board_id']);
-  //  }
-  //  $title = $payload['board_info']['title'];
    $title = $payload['info']['title'];
    $user_id = $_POST['user_id'];
    $board_id = $_POST['board_id'];
@@ -23,23 +15,13 @@
   </div>
   <h2 class='text-center'><?php echo $title;?></h2>
   <div class="row" style="padding-top:15px">
-      <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 text-center">
+      <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
           <div id="line" class="list-group list-group-horizontal">
-            <?php
-              // foreach ($payload['users_blocks'] as $block) {
-              foreach ($payload['blocks'] as $block) {
-                $title = $block['title'];
-                $block_id = $block['id'];
-                echo "<a href='#' data-user='$user_id' data-block='$block_id' class='list-group-item block dig'>$title</a>";
-
-              }
-            ?>
-              <a href="#" data-toggle="modal" data-target="#build_block_modal" class="list-group-item active"><i class="fa fa-plus clickable" aria-hidden="true"></i></a>
           </div>
       </div>
 	</div>
 
-  <div id="book_controller"  class="col-xs-12 col-sm-6">
+  <div id="book_controller"  class="col-xs-12 col-sm-6 no_pad">
     <div class='panel panel-default' >
       <div class='panel-heading'><span class="pull-right hidden-sm visible-xs see_block_controller"><i class="fa fa-cube fa-2x clickable" aria-hidden="true"></i></span><h4 class='text-center'>Scriptures<h4> </div>
       <div id="book_verses" class='panel-body'>verses go here</div>
@@ -51,7 +33,8 @@
       </div>
     </div>
   </div>
-  <div id="block_controller" class="col-xs-12 hidden-xs col-sm-6">
+
+  <div id="block_controller" class="col-xs-12 hidden-xs col-sm-6 no_pad">
     <div class='panel panel-default' >
       <div class='panel-heading'><span class="pull-left hidden-sm visible-xs see_book_controller"><i class="fa fa-book fa-2x clickable" aria-hidden="true"></i></span><h4 id="block_title" class='text-center'>Panel title<h4></div>
       <div id="block_verses" class='panel-body'>block verses</div>
