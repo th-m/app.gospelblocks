@@ -1,5 +1,10 @@
 $(function(){
   console.log('Welcome to Gospel Blocks');
+  window.oncontextmenu = function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     return false;
+   };
 });
 
 $('body').on('submit', '.form_submit' ,function(e){
@@ -156,84 +161,50 @@ $('#app_body').on('click', '.delete_verse' ,function(){
 
 
 // TODO this function needs a hairy eyeball.
-$('#app_body').on('mouseover', '.block' ,function(){
-  let longpress = 800;
-  var start = "";
-  let blockId = $(this).data('block');
-  appGlob.viewBlock = $(this).data('block');
-  $(this).on( 'mousedown', function (e){
-    start = new Date().getTime();
-  });
-  $(this).on( 'mouseleave', function(e){
-    start = 0;
-  });
-  $(this).on( 'mouseup', function( e ) {
-        if ( new Date().getTime() >= ( start + longpress )  ) {
-          var curr = new Date().getTime();
-          swal({
-                title:`<br/><textarea id="update_block_title" style="font-size:30px; width:100%; height:35px; float:left;">`+$(this).text()+`</textarea><br/>`,
-                // type: 'info',
-                html: `<textarea id="update_block_description" style="float:left; height:100px; width:100%;">`+$(this).data('description')+`</textarea>`,
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText:
-                  '<i class="fa fa-thumbs-up"></i> Update the Block!',
-                cancelButtonText:
-                  '<i class="fa fa-thumbs-down"></i> Delete This Block'
-          }).then(function () {
-            let blockTitle = $("#update_block_title").val();
-            let blockDescription = $("#update_block_description").val();
-            let values = {};
-            values['table'] = 'blocks';
-            values['id'] = blockId;
-            values['fields'] = {"title":blockTitle, "description":blockDescription};
-            $.ajax({
-                url: 'php_scripts/update.php',
-                type:'POST',
-                data:JSON.stringify({values}),
-                dataType: "html"
-              }).done(function(data) {
-                var json = $.parseJSON(data);
-                console.log(json);
-                if(json.response == "success"){
-                  $('#line').load('app/board/nav.php', {'user_id':appGlob['userId'], 'block_id': appGlob.history[appGlob.history.length - 1]});
-                  swal(
-                    'Updated!',
-                    'Your block has been updated.',
-                    'success'
-                  )
-                }
-              });
-          }, function (dismiss) {
-            if (dismiss === 'cancel') {  // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-              swal(
-                'Deleted',
-                'Your block is in a better place now );',
-                'error'
-              )
-            }
-          });
-          start = 0;
-        } else {
-          $('#block_controller').removeClass('hidden-xs');
-          $('#book_controller').addClass('hidden-xs');
-          appGlob.loadBlockVerses();
-          start = 0;
-        }
-    } );
-    // TODO We may have to use this bit of code for mobile version.
-    // window.onload = function() {
-    // //preload mouse down image here via Image()
-    //   $("#button_img").bind('touchstart', function(){
-    //       $("#button_img").attr("src","button_on.png");
-    //   }).bind('touchend', function(){
-    //       $("#button_img").attr("src","button_off.png");
-    //   });
-    // }
+
+var sw = 'false';
+$('#app_body').on('mousedown', '.block' ,function(){
+    appGlob.viewBlock = $(this).data('block');
+    appGlob.blockTitle = $(this).text();
+    appGlob.blockDesc = $(this).data('description')
+    clearTimeout(this.downTimer);
+    this.downTimer = setTimeout(function() {
+    		sw = 'true';
+        appGlob.editBlockInfo();
+    }, 500);
 });
 
-// TODO: Consolidate this javascript. Simplify into a few simple functions.
-// TODO: Create edit modal for block.
+$('#app_body').on('mouseup', '.block' ,function(){
+		if(sw == 'false'){
+      $('#block_controller').removeClass('hidden-xs');
+      $('#book_controller').addClass('hidden-xs');
+      appGlob.loadBlockVerses();
+    }
+    clearTimeout(this.downTimer);
+    sw = 'false';
+});
+
+var blockLongTouch;
+var blockTimer;
+var touchduration = 500;
+
+$('#app_body').on('touchstart','.block', function(){
+    blockTimer = setTimeout(blockLongTouch, touchduration);
+    appGlob.blockTitle = $(this).text();
+    appGlob.blockDesc = $(this).data('description')
+    $(this).addClass('select');
+    appGlob.currBlock = $(this).data('block');
+});
+$('#app_body').on('touchend','.block', function(){
+  if (blockTimer){
+  }
+  clearTimeout(blockTimer);
+});
+
+function blockLongTouch() {
+  appGlob.editBlockInfo();
+};
+
 // TODO: Look at tooltip plugins.
 // TODO: Look at firebase.
 // TODO: Look at react.

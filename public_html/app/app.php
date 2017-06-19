@@ -70,7 +70,52 @@
                   },
     'loadNav' : function (){
                   $('#line').load('app/board/nav.php ', {'user_id':this.userId, 'block_id': this.currBlock});
-                }
+                },
+    'editBlockInfo' : function(){
+                  swal({
+                        title:`<br/><textarea id="update_block_title" style="font-size:30px; width:100%; height:35px; float:left;">`+appGlob.blockTitle+`</textarea><br/>`,
+                        // type: 'info',
+                        html: `<textarea id="update_block_description" style="float:left; height:100px; width:100%;">`+appGlob.blockDesc+`</textarea>`,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        confirmButtonText:
+                          '<i class="fa fa-thumbs-up"></i> Update the Block!',
+                        cancelButtonText:
+                          '<i class="fa fa-thumbs-down"></i> Delete This Block'
+                  }).then(function () {
+                    let blockTitle = $("#update_block_title").val();
+                    let blockDescription = $("#update_block_description").val();
+                    let values = {};
+                    values['table'] = 'blocks';
+                    values['id'] = appGlob.currBlock;
+                    values['fields'] = {"title":blockTitle, "description":blockDescription};
+                    $.ajax({
+                        url: 'php_scripts/update.php',
+                        type:'POST',
+                        data:JSON.stringify({values}),
+                        dataType: "html"
+                      }).done(function(data) {
+                        var json = $.parseJSON(data);
+                        console.log(json);
+                        if(json.response == "success"){
+                          $('#line').load('app/board/nav.php', {'user_id':appGlob['userId'], 'block_id': appGlob.history[appGlob.history.length - 1]});
+                          swal(
+                            'Updated!',
+                            'Your block has been updated.',
+                            'success'
+                          )
+                        }
+                      });
+                  }, function (dismiss) {
+                    if (dismiss === 'cancel') {  // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
+                      swal(
+                        'Deleted',
+                        'Your block is in a better place now );',
+                        'error'
+                      )
+                    }
+                  });
+    }
   }
   $('#dashboard').load('app/dashboard/dashboard.php', {"user_id": appGlob.userId}).hide().fadeIn('slow');
 </script>
