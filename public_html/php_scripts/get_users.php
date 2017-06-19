@@ -10,7 +10,13 @@ $id = $json['appGlob']['userId'];
 $pin_block_sql = "SELECT id, email, display_name FROM users";
 
 $qry = mysqli_query($link,$pin_block_sql);
-$allUsers = json_encode(mysqli_fetch_all($qry,MYSQLI_ASSOC));
+// $qry = mysqli_query($link,$user_info_sql);
+// $result = $mysqli->query($query);
+$users = array();
+  while ($row = $qry->fetch_assoc()){
+    $users[] = $row;
+  }
+$allUsers = json_encode($users);
 
 $json_reponse = [
   "response" => "success",
