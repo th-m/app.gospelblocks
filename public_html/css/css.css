@@ -1,7 +1,29 @@
-/*Inline Block Top Nav Styling*/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px;
+    /* bottom = footer height */
+    padding: 25px;
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
+}
 
+footer form button {
+  position: relative;
+  float:right;
+  bottom:35px;
+}
 .list-group-horizontal .list-group-item {
-    display: inline-block;
+    display: inline;
+
 }
 .list-group-horizontal .list-group-item {
 	margin-bottom: 0;
@@ -11,13 +33,23 @@
 .list-group-horizontal .list-group-item:first-child {
 	border-top-right-radius:0;
 	border-bottom-left-radius:4px;
+  padding-right: 10px !important;
 }
 .list-group-horizontal .list-group-item:last-child {
 	border-top-right-radius:4px;
 	border-bottom-left-radius:0;
+  padding-right: 10px !important;
 }
-
+.list-group-item:last-child .fa{
+  display: inline;
+  position: relative;
+  top:5px;
+}
 .labelauty-unchecked{width:auto!important;}
 .clickable{
   cursor: pointer;
 }
+
+#line{ overflow-x: scroll; max-height: 74px;  height: 63px; margin-bottom: 35px; padding:0px 20px; white-space: nowrap;}
+#line a{padding:10px; position: relative; top:10px; white-space: nowrap; padding-right: 16px;}
+#line a h4{display: inline; white-space: nowrap;}

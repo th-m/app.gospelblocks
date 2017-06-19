@@ -57,30 +57,26 @@ require("../../includes/api_functions.php");
     $chapter= "<?php echo $_POST['chapter'];?>";
     console.log($selector);
     if($selector != 0){
-      console.log('changed');
-
-
       if($volume != ""){
         if($book != ""){
           if($chapter != ""){
-
+            }else{
+              $selector = $( "#library_select" ).val();
+              $("#book_verses").load("app/board/script_verses.php", {"volume": $volume, "book": $book, "chapter": $selector});
+            }
           }else{
-            $selector = $( "#library_select" ).val();
-            $("#book_verses").load("app/board/script_verses.php", {"volume": $volume, "book": $book, "chapter": $selector});
+            $("#library_search").load("app/board/library_select.php", {"volume": $volume, "book": $selector});
           }
         }else{
-          $("#library_search").load("app/board/library_select.php", {"volume": $volume, "book": $selector});
+          $("#library_search").load("app/board/library_select.php", {"volume": $selector});
         }
+        // $("#library_search").load("app/board/library_select.php", {"volume": $volume, "book": $book, "chapter": $chapter});
       }else{
-        $("#library_search").load("app/board/library_select.php", {"volume": $selector});
+        if($book != ""){
+          $("#library_search").load("app/board/library_select.php", {"volume": $volume});
+        }else{
+          $("#library_search").load("app/board/library_select.php");
+        }
       }
-      // $("#library_search").load("app/board/library_select.php", {"volume": $volume, "book": $book, "chapter": $chapter});
-    }else{
-      if($book != ""){
-        $("#library_search").load("app/board/library_select.php", {"volume": $volume});
-      }else{
-        $("#library_search").load("app/board/library_select.php");
-      }
-    }
   });
 </script>

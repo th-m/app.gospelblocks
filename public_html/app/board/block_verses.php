@@ -8,13 +8,7 @@
     $scripture=$verse['verse_scripture'];
     $verse_id=$verse['id'];
     $short_title=$verse['verse_title_short'];
-    echo "<p class='script_verse' data-verse_id='$verse_id'><span>$short_title <br/></span>$scripture</p>";
+    echo "<p class='script_verse' data-verse_id='$verse_id'><span>$short_title </span><span class='delete_verse' style='float:right;'><i class='fa fa-times' aria-hidden='true'></i></span><br/>$scripture</p>";
   }
 
  ?>
-<script type="text/javascript">
-$('.script_verse').click(function(){
-  $block_id = $(this).attr("data-block");
-    console.log()
-      });
-</script>

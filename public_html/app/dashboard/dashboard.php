@@ -2,7 +2,7 @@
   include("../../includes/api_functions.php");
   $payload = gb_usersPinnedBlocks($_POST['user_id']);
   $user_id = $_POST['user_id'];
-  // print_r ($_SESSION);
+  // print_r($_SESSION);
 
   // echo $user_id;
   // echo 'test';
@@ -14,20 +14,18 @@
     $block_id = $v['block_id'];
     echo "
     <div class='row'>
-        <div class='col-md-10 col-md-offset-1 col-sm-12'>
-          <div class='panel panel-default user_board'  data-perm='$permission' data-block='$block_id'>
-            <div class='panel-heading'><h2 class='text-center'>$title<h2></div>
+        <div class='col-md-10 col-md-offset-1 col-sm-12 no_pad'>
+          <div class='panel panel-default' data-perm='$permission' data-block='$block_id' data-user='$user_id'>
+            <div class='panel-heading user_board'>
+
+              <h2 class='text-center'>$title<h2>
+            </div>
             <div class='panel-body'><h4>$description</h4></div>
+            <div class='panel-footer'>
+                <i class='fa fa-users share_block' aria-hidden='true'></i>
+            </div>
           </div>
         </div>
     </div>";
    }
 ?>
-
-<script type="text/javascript">
-  $('.user_board').click(function(){
-    $permission = $(this).attr("data-perm");
-    $block = $(this).attr("data-block");
-    $('#app_body').load('app/board/board.php', {"permission": $permission, "user_id": <?php echo $user_id;?>, "block_id": $block}).hide().fadeIn('slow');
-  });
-</script>

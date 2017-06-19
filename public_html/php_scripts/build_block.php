@@ -81,6 +81,8 @@ if(isset($json['values']['div_id'])){
 }
 
 $json_response["response"] = "success";
+$json_response["addHistory"] = "yes";
+$json_response["block_id"] = $last_id;
 $json_response['modal'] = 'close';
 $json_response['user'] = $user_id;
 $json_response['json'] = $json;

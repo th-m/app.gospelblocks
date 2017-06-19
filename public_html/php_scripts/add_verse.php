@@ -13,11 +13,11 @@ foreach ($json['values']['checkboxes'] as $block_id) {
   //             (id,title,board_id,sequence)
   //             VALUES
   //             (null,$title,$board_id,$sequence)";
-$add_block_verse_sql = "INSERT INTO block_verses
-            (id,verse_id,block_id,sequence)
-            VALUES
-            (null,$verse_id,$block_id,$sequence);";
-mysqli_query($link, $add_block_verse_sql);
+  $add_block_verse_sql = "INSERT INTO block_verses
+              (id,verse_id,block_id,sequence)
+              VALUES
+              (null,$verse_id,$block_id,$sequence);";
+  mysqli_query($link, $add_block_verse_sql);
 }
 $alert = 'Wow, You just organized a block of verses';
 
