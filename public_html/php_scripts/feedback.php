@@ -11,7 +11,13 @@
   $user_info_sql = "SELECT id, email, display_name FROM users WHERE id = $id";
 
   $qry = mysqli_query($link,$user_info_sql);
-  $user = (mysqli_fetch_all($qry,MYSQLI_ASSOC));
+  // $result = $mysqli->query($query);
+  $user = array();
+    while ($row = $qry->fetch_assoc()){
+      $user[] = $row;
+    }
+  // $user = (mysqli_fetch_all($qry,MYSQLI_ASSOC));
+  // print_r($user);
   function slack_message($message, $channel, $username, $emoji) {
   	// Build Message.
   	$data = "payload=" . json_encode(array(
