@@ -5,7 +5,13 @@
 	// Get JSON Call
 	$json = file_get_contents('php://input');
 	$json = json_decode($json, true);
-  $message = $json['feedback'];
+  $message = $json['values']['comments'];
+  $id = $json['values']['appGlobuserId'];
+  // print_r($json);
+  $user_info_sql = "SELECT id, email, display_name FROM users WHERE id = $id";
+
+  $qry = mysqli_query($link,$user_info_sql);
+  $user = (mysqli_fetch_all($qry,MYSQLI_ASSOC));
   function slack_message($message, $channel, $username, $emoji) {
   	// Build Message.
   	$data = "payload=" . json_encode(array(
@@ -24,6 +30,14 @@
   	curl_close($ch);
   }
 
-  slack_message($message, "#gospel_blocks_ideas", "Someone Said Something", ":speech_balloon:");
+  $sender = $user[0]['email']." (".$user[0]['display_name'].") said,";
+  slack_message($message, "#gospel_blocks_ideas", $sender, ":speech_balloon:");
+
+
+  $json_reponse = [
+    "response" => "success",
+  ];
+
+  echo json_encode($json_reponse);
 
 ?>

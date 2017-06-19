@@ -41,12 +41,12 @@
 </div>
 <footer>
   <div class="col-xs-12">
-    <form>
+    <form class="form_submit" id="feedback_bar">
       <input type="hidden" name="function" value="feedback">
       <div class="form-group">
         <textarea name="comments" class="form-control" rows="3" cols="80" placeholder="Leave a comment here, and help improve the app."></textarea>
       </div>
-      <button type="submit" name="button" class="btn btn-success">Send Feedback</button>
+      <button type="submit" name="submit" class="btn btn-success">Send Feedback</button>
     </form>
   </div>
 </footer>

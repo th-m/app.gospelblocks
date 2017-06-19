@@ -17,6 +17,8 @@ $('body').on('submit', '.form_submit' ,function(e){
     var checks = $('#'+this.id+' input:checkbox:checked').map(function () {
       values['checkboxes'].push($(this).attr('value'));
     }).get();
+    values[$('#'+this.id+' textarea').attr('name')] = $('#'+this.id+' textarea').val();
+    values['appGlobuserId'] = appGlob.userId;
     console.log(values);
     $.ajax({
         url: 'php_scripts/'+values.function+'.php',
