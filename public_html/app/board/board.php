@@ -26,7 +26,14 @@
       <div class='panel-heading'><span class="pull-right hidden-sm visible-xs see_block_controller"><i class="fa fa-cube fa-2x clickable" aria-hidden="true"></i></span><h4 class='text-center'>Scriptures<h4> </div>
       <div id="book_verses" class='panel-body'>verses go here</div>
       <div class="panel-footer">
-        <div id="library_search" class="">
+        <div id="library_search" class="row">
+          <form id="library_search_form">
+            <span class="form-group col-xs-10">
+              <input id="search_string" type="text" placeholder="Use `&&` and `||` for advanced searches" name='title' class="form-control">
+            </span>
+            <button type="submit" class="btn btn-danger col-xs-2">search</button>
+            <button type="button" class="btn btn-warning col-xs-2">clear search</button>
+          </form>
         </div>
         <div id="advanced_picker" class="">
         </div>
@@ -74,5 +81,5 @@
 
 
   <script>
-    $("#library_search").load("app/board/library_select.php");
+    $("#book_verses").load("app/board/library_select.php");
   </script>

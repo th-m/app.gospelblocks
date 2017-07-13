@@ -53,3 +53,7 @@ footer form button {
 #line{ overflow-x: scroll; max-height: 74px;  height: 63px; margin-bottom: 35px; padding:0px 20px; white-space: nowrap;}
 #line a{padding:10px; position: relative; top:10px; white-space: nowrap; padding-right: 16px;}
 #line a h4{display: inline; white-space: nowrap;}
+
+#book_verses .library_book {min-height: 20px; height: auto; border: 1px solid #ddd; border-radius: 5px; background-color: #f5f5f5; text-align: center;  }
+#scripture_bread ul li {display: inline-block; min-width: 30px;}
+#book_verses, #block_verses {height: 480px; overflow: scroll;}

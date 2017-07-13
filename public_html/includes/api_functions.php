@@ -78,6 +78,12 @@ Function gbCall($gbRoute) {
 		$response = gbCall("/users/$user/block/$block_id/verses");
 		return $response;
 	}
+
+	// Get Verses associated with Search
+	Function gb_searchVerses($search_string, $page) {
+		$response = gbCall("/search/$search_string/$page");
+		return $response;
+	}
 	// // Users Boards
 	// Function gb_usersBoards($user) {
 	// // 	$response = gbCall("/users/$user/boards");

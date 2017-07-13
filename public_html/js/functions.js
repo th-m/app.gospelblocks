@@ -222,8 +222,34 @@ $('#dashboard').on('click','.share_block', function(){
   appGlob.currBlock = $(this).parent().parent().data("block");
 });
 
+
+$('#app_body').on('click','.library_book', function(){
+  if(!$(this).data('obj').volume){$(this).data('obj').volume = $(this).data('lid')}
+  else if(!$(this).data('obj').book){$(this).data('obj').book = $(this).data('lid')}
+  else {$(this).data('obj').chapter = $(this).data('lid')};
+  $("#book_verses").load("app/board/library_select.php", $(this).data('obj'));
+});
+
+$('#app_body').on('click','.crumb', function(){
+  let obj = $(this).data('obj');
+  console.log($(this).data('crumb'));
+  if($(this).data('crumb') == 'volume' ){
+    console.log(obj);
+    delete  obj.book;
+    delete  obj.chapter;
+    console.log(obj);
+  }else if($(this).data('crumb') == 'book' ){
+    delete  obj.chapter;
+  }
+  $("#book_verses").load("app/board/library_select.php", obj);
+});
+
+$('#app_body').on('submit', '#library_search_form', function(e){
+  e.preventDefault();
+  // console.log($('#search_string').val());
+  $("#book_verses").load("app/board/library_select.php", {search:$('#search_string').val()});
+});
 // TODO: IMPLEMENT CONTROLS ON PERMISSIONS
-// TODO: create feedback button at bottom.
 // TODO: Look at tooltip plugins.
 // TODO: Look at firebase.
 // TODO: Look at react.
