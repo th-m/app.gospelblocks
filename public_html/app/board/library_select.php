@@ -34,11 +34,11 @@ require("../../includes/api_functions.php");
      if(!empty($_POST['page'])){
        $page = $_POST['page'];
      }
-     $payload = gb_searchVerses($_POST['search'], $page);
+     $payload = gb_searchVerses($_POST['search'], $page, $_POST['context']);
      echo "<div><small style='display:inline-block'>Pages</small>";
      echo "<ul style='display:inline-block; padding-left:10px;'>";
      for($x = 1; $x <= $payload["pages_count"]; $x++){
-       echo "<small><li class='search_pages' style='display:inline-block' data-result_page='$x'>&nbsp;$x&nbsp;</li></small>";
+       echo "<small><li class='search_pages clickable' style='display:inline-block' data-result_page='$x'>&nbsp;$x&nbsp;</li></small>";
      }
      echo "</ul>";
      echo "</div><br>";
@@ -62,8 +62,10 @@ require("../../includes/api_functions.php");
   $data_str = json_encode($data_arr);
   if($title != 'volume_title'){
     echo '<div id="scripture_bread" class"col-xs-12"><ul>';
+            echo "<li class='crumb' data-crumb='volume' data-obj='{}' >Volumes</li>";
+
             if(!empty($_POST['volume'])){
-              echo "<li class='crumb' data-crumb='volume' data-obj=".$data_str." >".$payload['volume']['title']."</li>";
+              echo "<li class='crumb' data-crumb='volume' data-obj=".$data_str." >&nbsp;- ".$payload['volume']['title']."</li>";
             }
             if(!empty($_POST['book'])){
               echo "<li class='crumb' data-crumb='book' data-obj=".$data_str." >&nbsp;- ".$payload['book']['title']."</li>";

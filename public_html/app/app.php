@@ -60,6 +60,7 @@
     'viewBlock' : "",
     'blockTitle' : "",
     'blockDesc' : "",
+    'sriptureObj': {},
     'loadBlockVerses' :  function(){
                           $('#block_verses').load('app/board/block_verses.php', {"user_id": this.userId, "block_id": this.viewBlock}).hide().fadeIn('slow');
                         },

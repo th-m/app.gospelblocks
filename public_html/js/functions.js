@@ -227,11 +227,14 @@ $('#app_body').on('click','.library_book', function(){
   if(!$(this).data('obj').volume){$(this).data('obj').volume = $(this).data('lid')}
   else if(!$(this).data('obj').book){$(this).data('obj').book = $(this).data('lid')}
   else {$(this).data('obj').chapter = $(this).data('lid')};
+  appGlob.scriptureObj = $(this).data('obj');
   $("#book_verses").load("app/board/library_select.php", $(this).data('obj'));
 });
 
 $('#app_body').on('click','.crumb', function(){
   let obj = $(this).data('obj');
+  appGlob.scriptureObj = obj;
+
   console.log($(this).data('crumb'));
   if($(this).data('crumb') == 'volume' ){
     console.log(obj);
@@ -244,11 +247,23 @@ $('#app_body').on('click','.crumb', function(){
   $("#book_verses").load("app/board/library_select.php", obj);
 });
 
+$('#app_body').on('click', '#clear_search', function(e){
+  console.log(appGlob.scriptureObj);
+  $("#book_verses").load("app/board/library_select.php", appGlob.scriptureObj);
+});
+
+$('#app_body').on('click', '.search_pages', function(e){
+  console.log(appGlob.scriptureObj);
+  let page = $(this).data('result_page');
+  $("#book_verses").load("app/board/library_select.php", {search:$('#search_string').val(), context: appGlob.scriptureObj, page: page});
+});
 $('#app_body').on('submit', '#library_search_form', function(e){
   e.preventDefault();
-  // console.log($('#search_string').val());
-  $("#book_verses").load("app/board/library_select.php", {search:$('#search_string').val()});
+  console.log(appGlob.scriptureObj);
+  $("#book_verses").load("app/board/library_select.php", {search:$('#search_string').val(), context: appGlob.scriptureObj});
 });
+
+
 // TODO: IMPLEMENT CONTROLS ON PERMISSIONS
 // TODO: Look at tooltip plugins.
 // TODO: Look at firebase.

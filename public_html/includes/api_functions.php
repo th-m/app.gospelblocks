@@ -80,10 +80,28 @@ Function gbCall($gbRoute) {
 	}
 
 	// Get Verses associated with Search
-	Function gb_searchVerses($search_string, $page) {
-		$response = gbCall("/search/$search_string/$page");
+	Function gb_searchVerses($search_string, $page, $context) {
+		if(!isset($context['volume'])){
+			$response = gbCall("/search/$search_string/$page");
+		}elseif ($context['chapter'] != "") {
+			$volume = $context['volume'];
+			$book = $context['book'];
+			$chapter = $context['chapter'];
+			$response = gbCall("/search/$search_string/$volume/$book/$chapter/$page");
+		}elseif ($context['book'] != "") {
+			print_r($context);
+			$volume = $context['volume'];
+			$book = $context['book'];
+			echo "/search/$search_string/$volume/$book/$page";
+			$response = gbCall("/search/$search_string/$volume/$book/$page");
+		}elseif ($context['volume'] != "") {
+			$volume = $context['volume'];
+			$response = gbCall("/search/$search_string/$volume/$page");
+		}
+
 		return $response;
 	}
+
 	// // Users Boards
 	// Function gb_usersBoards($user) {
 	// // 	$response = gbCall("/users/$user/boards");

@@ -31,8 +31,8 @@
             <span class="form-group col-xs-10">
               <input id="search_string" type="text" placeholder="Use `&&` and `||` for advanced searches" name='title' class="form-control">
             </span>
-            <button type="submit" class="btn btn-danger col-xs-2">search</button>
-            <button type="button" class="btn btn-warning col-xs-2">clear search</button>
+            <button type="submit" class="btn btn-success col-xs-1"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <button id="clear_search"type="button" class="btn btn-danger col-xs-1"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
           </form>
         </div>
         <div id="advanced_picker" class="">
